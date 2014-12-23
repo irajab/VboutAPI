@@ -1,4 +1,4 @@
 VboutAPI
 ========
 
-Vbout API
+API integration for Vbout.com services
