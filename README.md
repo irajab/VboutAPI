@@ -5,7 +5,7 @@ This is an API package for the Vbout.com Services. It allows you to build a flex
 
 ## Docs
 
-Refer to the [Wiki](https://developers.vbout.com/docs) for installation instructions and how to use this package.
+Refer to the [Documentation](https://developers.vbout.com/docs) for installation instructions and how to use this package.
 
 ## License
 
