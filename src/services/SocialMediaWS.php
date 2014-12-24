@@ -1,51 +1,46 @@
 <?php
 
 require_once dirname(dirname(__FILE__)) . '/base/Vbout.php';
-require_once dirname(dirname(__FILE__)) . '/VboutException.php';
+require_once dirname(dirname(__FILE__)) . '/base/VboutException.php';
 
-class ApplicationWS extends Vbout {
-    private $api_url = '/socialmedia/';
-	
-	/**
-     * Response type: JSON / XML
-     */
-	private $api_response = 'json';
+class SocialMediaWS extends Vbout 
+{
+	protected function init()
+	{
+		$this->api_url = '/socialmedia/';
+	}
 	
 	public function getCalendar($params = array())
     {	
 		$result = array();
 		
-		$this->api_url .= 'calendar.'.$this->api_response;
-		
 		try {
 			$calendar = $this->calendar($params);
 
-            if ($calendar != null && isset($calendar['response'])) {
-                $result = array_merge($result, $calendar['data']);
+            if ($calendar != null && isset($calendar['data'])) {
+                $result = array_merge($result, $calendar['data']['items']);
             }
 
 		} catch (VboutException $ex) {
-			throw new VboutException($ex);
+			$result = $ex->getData();
         }
 		
        return $result;
     }
 	
-	public function getChannels($params = array())
+	public function getChannels()
     {	
 		$result = array();
 		
-		$this->api_url .= 'channels.'.$this->api_response;
-		
 		try {
-			$channels = $this->channels($params);
+			$channels = $this->channels();
 
-            if ($channels != null && isset($channels['response'])) {
-                $result = array_merge($result, $channels['data']);
+            if ($channels != null && isset($channels['data'])) {
+                $result = array_merge($result, $channels['data']['channels']);
             }
 
 		} catch (VboutException $ex) {
-			throw new VboutException($ex);
+			$result = $ex->getData();
         }
 		
        return $result;
@@ -55,17 +50,15 @@ class ApplicationWS extends Vbout {
     {	
 		$result = array();
 		
-		$this->api_url .= 'getpost.'.$this->api_response;
-		
 		try {
 			$post = $this->getpost($params);
 
-            if ($post != null && isset($post['response'])) {
-                $result = array_merge($result, $post['data']);
+            if ($post != null && isset($post['data'])) {
+                $result = array_merge($result, $post['data']['item']);
             }
 
 		} catch (VboutException $ex) {
-			throw new VboutException($ex);
+			$result = $ex->getData();
         }
 		
        return $result;
@@ -75,32 +68,33 @@ class ApplicationWS extends Vbout {
     {	
 		$result = array();
 		
-		$this->api_url .= 'stats.'.$this->api_response;
-		
 		try {
 			$stats = $this->stats($params);
 
-            if ($stats != null && isset($stats['response'])) {
-                $result = array_merge($result, $stats['data']);
+            if ($stats != null && isset($stats['data'])) {
+                $result = array_merge($result, $stats['data']['stats']);
             }
 
 		} catch (VboutException $ex) {
-			throw new VboutException($ex);
+			$result = $ex->getData();
         }
 		
        return $result;
     }
 	
-	public function deletePost($params = array())
+	public function deletePost($id = NULL)
     {	
 		$result = array();
 		
-		$this->api_url .= 'deletepost.'.$this->api_response;
-		
 		try {
-			$this->deletepost($params);
+			$post = $this->deletepost(array('id'=>$id));
+
+            if ($post != null && isset($post['data'])) {
+                $result = array_merge($result, $post['data']['item']);
+            }
+
 		} catch (VboutException $ex) {
-			throw new VboutException($ex);
+			$result = $ex->getData();
         }
 		
        return $result;
@@ -110,12 +104,15 @@ class ApplicationWS extends Vbout {
     {	
 		$result = array();
 		
-		$this->api_url .= 'addpost.'.$this->api_response;
-		
 		try {
-			$this->addpost($params);
+			$post = $this->addpost($params);
+
+            if ($post != null && isset($post['data'])) {
+                $result = array_merge($result, $post['data']['item']);
+            }
+
 		} catch (VboutException $ex) {
-			throw new VboutException($ex);
+			$result = $ex->getData();
         }
 		
        return $result;

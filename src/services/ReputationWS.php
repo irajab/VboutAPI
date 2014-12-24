@@ -1,31 +1,28 @@
 <?php
 
 require_once dirname(dirname(__FILE__)) . '/base/Vbout.php';
-require_once dirname(dirname(__FILE__)) . '/VboutException.php';
+require_once dirname(dirname(__FILE__)) . '/base/VboutException.php';
 
-class ApplicationWS extends Vbout {
-    private $api_url = '/reputation/';
-	
-	/**
-     * Response type: JSON / XML
-     */
-	private $api_response = 'json';
+class ReputationWS extends Vbout 
+{
+	protected function init()
+	{
+		$this->api_url = '/reputation/';
+	}
 	
 	public function getDirectReviews($params = array())
     {	
 		$result = array();
 		
-		$this->api_url .= 'direct.'.$this->api_response;
-		
 		try {
 			$reviews = $this->direct($params);
 
-            if ($reviews != null && isset($reviews['response'])) {
-                $result = array_merge($result, $reviews['data']['reviews']['items']);
+            if ($reviews != null && isset($reviews['data'])) {
+                $result = array_merge($result, $reviews['data']['reviews']);
             }
 
 		} catch (VboutException $ex) {
-			throw new VboutException($ex);
+			$result = $ex->getData();
         }
 		
        return $result;
@@ -35,37 +32,33 @@ class ApplicationWS extends Vbout {
     {	
 		$result = array();
 		
-		$this->api_url .= 'online.'.$this->api_response;
-		
 		try {
 			$reviews = $this->online($params);
 
-            if ($reviews != null && isset($reviews['response'])) {
-                $result = array_merge($result, $reviews['data']['reviews']['items']);
+            if ($reviews != null && isset($reviews['data'])) {
+                $result = array_merge($result, $reviews['data']['reviews']);
             }
 
 		} catch (VboutException $ex) {
-			throw new VboutException($ex);
+			$result = $ex->getData();
         }
 		
        return $result;
     }
 	
-	public function getFeedback($params = array())
+	public function getFeedback($id = NULL)
     {	
 		$result = array();
 		
-		$this->api_url .= 'getfeedack.'.$this->api_response;
-		
 		try {
-			$review = $this->getfeedack($params);
+			$review = $this->getfeedack(array('id'=>$id));
 
-            if ($review != null && isset($review['response'])) {
+            if ($review != null && isset($review['data'])) {
                 $result = array_merge($result, $review['data']['item']);
             }
 
 		} catch (VboutException $ex) {
-			throw new VboutException($ex);
+			$result = $ex->getData();
         }
 		
        return $result;
@@ -75,17 +68,15 @@ class ApplicationWS extends Vbout {
     {	
 		$result = array();
 		
-		$this->api_url .= 'sentiment.'.$this->api_response;
-		
 		try {
 			$sentiment = $this->sentiment($params);
 
-            if ($sentiment != null && isset($sentiment['response'])) {
-                $result = array_merge($result, $sentiment['data']);
+            if ($sentiment != null && isset($sentiment['data'])) {
+                $result = array_merge($result, $sentiment['data']['sentiment']);
             }
 
 		} catch (VboutException $ex) {
-			throw new VboutException($ex);
+			$result = $ex->getData();
         }
 		
        return $result;
@@ -95,32 +86,33 @@ class ApplicationWS extends Vbout {
     {	
 		$result = array();
 		
-		$this->api_url .= 'stats.'.$this->api_response;
-		
 		try {
 			$stats = $this->stats($params);
 
-            if ($stats != null && isset($stats['response'])) {
+            if ($stats != null && isset($stats['data'])) {
                 $result = array_merge($result, $stats['data']['stats']);
             }
 
 		} catch (VboutException $ex) {
-			throw new VboutException($ex);
+			$result = $ex->getData();
         }
 		
        return $result;
     }
 	
-	public function deleteFeedback($params = array())
+	public function deleteFeedback($id = NULL)
     {	
 		$result = array();
 		
-		$this->api_url .= 'deletefeedback.'.$this->api_response;
-		
 		try {
-			$this->deletefeedback($params);
+			$review = $this->deletefeedback(array('id'=>$id));
+
+            if ($review != null && isset($review['data'])) {
+                $result = array_merge($result, $review['data']['item']);
+            }
+
 		} catch (VboutException $ex) {
-			throw new VboutException($ex);
+			$result = $ex->getData();
         }
 		
        return $result;

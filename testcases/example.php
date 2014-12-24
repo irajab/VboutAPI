@@ -1,7 +1,7 @@
 <?php
 	require_once('../src/services/ApplicationWS.php');
 
-	$user_key = array('user_key' => '{YOUR_API_KEY}');
+	$user_key = array('api_key' => '{YOUR_API_KEY}');
 	
 	$app = new ApplicationWS($user_key);
 	

@@ -18,8 +18,13 @@ class Vbout {
 	 *	\_ CURRENTLY ONLY user_key
      */
     private $auth_tokens;
-    private $api_url;
-
+    
+	protected $api_url;
+	/**
+     * Response type: JSON / XML
+     */
+	protected $api_response = 'JSON';
+	
     /**
      * Query method: POST / GET / PUT / DELETE
      */
@@ -38,6 +43,8 @@ class Vbout {
 		if ($api_endpoint != NULL) $this->api_endpoint;
 		if ($api_version != NULL) $this->api_version;
         
+		$this->init();
+		
 		if (is_array($tokens)) {
 			//	WIP:: DON'T USE THIS METHOD YET
             if (array_key_exists('access_code', $tokens)) {
@@ -49,6 +56,8 @@ class Vbout {
             $this->auth_tokens['user_key'] = $tokens;
         }
     }
+	
+	protected function init() { /* NOTHING */ }
 
     public function set_method($method)
     {
@@ -124,7 +133,7 @@ class Vbout {
         }
 
         // Build our request url, urlencode querystring params
-        $request_url = $this->protocol . $this->api_endpoint . $name . '?' . http_build_query($params);
+        $request_url = $this->protocol . $this->api_endpoint . '/' . $this->api_version . $this->api_url . $name . '.' . strtolower($this->api_response) . '?' . http_build_query($params);
         
 		$ch = curl_init();
 
@@ -136,13 +145,10 @@ class Vbout {
 		}
 
         $header[] = "Accept: application/json";
-        $header[] = "Accept-Encoding: gzip";
-        $header[] = "Content-length: 0";
 
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-        curl_setopt($ch, CURLOPT_ENCODING, "gzip");
         curl_setopt($ch, CURLOPT_URL, $request_url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
@@ -150,8 +156,9 @@ class Vbout {
 
         $response = json_decode($result, true);
 
-        $response = current( $response );
-
-        return $response;
+		if (isset($response['response']) && $response['response']['header']['status'] == 'error')
+			throw new VboutException($response['response']['data']);
+		
+        return $response['response'];
     }
 }
