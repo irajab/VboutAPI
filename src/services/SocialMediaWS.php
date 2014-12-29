@@ -90,7 +90,7 @@ class SocialMediaWS extends Vbout
 			$post = $this->deletepost(array('id'=>$id));
 
             if ($post != null && isset($post['data'])) {
-                $result = array_merge($result, $post['data']['item']);
+                $result = $post['data']['item'];
             }
 
 		} catch (VboutException $ex) {
@@ -106,9 +106,9 @@ class SocialMediaWS extends Vbout
 		
 		try {
 			$post = $this->addpost($params);
-
+			
             if ($post != null && isset($post['data'])) {
-                $result = array_merge($result, $post['data']['item']);
+                $result = $post['data']['item'];
             }
 
 		} catch (VboutException $ex) {

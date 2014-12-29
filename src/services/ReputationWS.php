@@ -108,7 +108,7 @@ class ReputationWS extends Vbout
 			$review = $this->deletefeedback(array('id'=>$id));
 
             if ($review != null && isset($review['data'])) {
-                $result = array_merge($result, $review['data']['item']);
+                $result = $review['data']['item'];
             }
 
 		} catch (VboutException $ex) {

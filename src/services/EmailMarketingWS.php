@@ -54,7 +54,7 @@ class EmailMarketingWS extends Vbout
 			$campaign = $this->deletecampaign($params);
 
             if ($campaign != null && isset($campaign['data'])) {
-                $result = array_merge($result, $campaign['data']['item']);
+                $result = $campaign['data']['item'];
             }
 
 		} catch (VboutException $ex) {
@@ -72,7 +72,7 @@ class EmailMarketingWS extends Vbout
 			$campaign = $this->addcampaign($params);
 
             if ($campaign != null && isset($campaign['data'])) {
-                $result = array_merge($result, $campaign['data']['item']);
+                $result = $campaign['data']['item'];
             }
 
 		} catch (VboutException $ex) {
@@ -90,7 +90,7 @@ class EmailMarketingWS extends Vbout
 			$campaign = $this->editcampaign($params);
 
             if ($campaign != null && isset($campaign['data'])) {
-                $result = array_merge($result, $campaign['data']['item']);
+                $result = $campaign['data']['item'];
             }
 
 		} catch (VboutException $ex) {
@@ -144,7 +144,7 @@ class EmailMarketingWS extends Vbout
 			$list = $this->addlist($params);
 
             if ($list != null && isset($list['data'])) {
-                $result = array_merge($result, $list['data']['item']);
+                $result = $list['data']['item'];
             }
 
 		} catch (VboutException $ex) {
@@ -162,7 +162,7 @@ class EmailMarketingWS extends Vbout
 			$list = $this->deletelist(array('id'=>$id));
 
             if ($list != null && isset($list['data'])) {
-                $result = array_merge($result, $list['data']['item']);
+                $result = $list['data']['item'];
             }
 
 		} catch (VboutException $ex) {
@@ -180,7 +180,7 @@ class EmailMarketingWS extends Vbout
 			$list = $this->editlist($params);
 
             if ($list != null && isset($list['data'])) {
-                $result = array_merge($result, $list['data']['item']);
+                $result = $list['data']['item'];
             }
 
 		} catch (VboutException $ex) {
@@ -234,7 +234,7 @@ class EmailMarketingWS extends Vbout
 			$contact = $this->addcontact($params);
 
             if ($contact != null && isset($contact['data'])) {
-                $result = array_merge($result, $contact['data']['item']);
+                $result = $contact['data']['item'];
             }
 
 		} catch (VboutException $ex) {
@@ -252,7 +252,7 @@ class EmailMarketingWS extends Vbout
 			$contact = $this->editcontact($params);
 
             if ($contact != null && isset($contact['data'])) {
-                $result = array_merge($result, $contact['data']['item']);
+                $result = $contact['data']['item'];
             }
 
 		} catch (VboutException $ex) {
@@ -270,7 +270,7 @@ class EmailMarketingWS extends Vbout
 			$contact = $this->deletecontact(array('id'=>$id));
 
             if ($contact != null && isset($contact['data'])) {
-                $result = array_merge($result, $contact['data']['item']);
+                $result = $contact['data']['item'];
             }
 
 		} catch (VboutException $ex) {
