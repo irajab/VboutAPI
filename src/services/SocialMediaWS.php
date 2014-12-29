@@ -46,7 +46,7 @@ class SocialMediaWS extends Vbout
        return $result;
     }
 	
-	public function getPost($params = array())
+	public function getMyPost($params = array())
     {	
 		$result = array();
 		
@@ -82,7 +82,7 @@ class SocialMediaWS extends Vbout
        return $result;
     }
 	
-	public function deletePost($id = NULL)
+	public function removePost($id = NULL)
     {	
 		$result = array();
 		
@@ -100,7 +100,7 @@ class SocialMediaWS extends Vbout
        return $result;
     }
 	
-	public function addPost($params = array())
+	public function addNewPost($params = array())
     {	
 		$result = array();
 		

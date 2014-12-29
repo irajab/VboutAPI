@@ -46,7 +46,7 @@ class ReputationWS extends Vbout
        return $result;
     }
 	
-	public function getFeedback($id = NULL)
+	public function getMyFeedback($id = NULL)
     {	
 		$result = array();
 		
@@ -100,7 +100,7 @@ class ReputationWS extends Vbout
        return $result;
     }
 	
-	public function deleteFeedback($id = NULL)
+	public function removeFeedback($id = NULL)
     {	
 		$result = array();
 		
