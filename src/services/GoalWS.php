@@ -15,7 +15,7 @@ class GoalWS extends Vbout
 		$result = array();
 		
 		try {
-			$goals = $this->add($params);
+			$goals = $this->lists($params);
 
             if ($goals != null && isset($goals['data'])) {
                 $result = array_merge($result, $goals['data']['goals']);
