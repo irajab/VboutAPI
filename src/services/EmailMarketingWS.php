@@ -216,12 +216,12 @@ class EmailMarketingWS extends Vbout
        return $result;
     }
 	
-	public function searchContact($email = NULL)
+	public function searchContact($email = NULL, $listid = NULL)
     {	
 		$result = array();
 		
 		try {
-			$contact = $this->getcontactbyemail(array('email'=>$email));
+			$contact = $this->getcontactbyemail(array('email'=>$email, 'listid'=>$listid));
 
             if ($contact != null && isset($contact['data'])) {
                 $result = array_merge($result, $contact['data']['contact']);
