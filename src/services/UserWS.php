@@ -46,6 +46,62 @@ class UserWS extends Vbout
        return $result;
     }
 	
+	public function getGroups($params = array())
+    {	
+		$result = array();
+		
+		try {
+			$groups = $this->groups($params);
+
+            if ($groups != null && isset($groups['data'])) {
+                $result = array_merge($result, $groups['data']['groups']);
+            }
+
+		} catch (VboutException $ex) {
+			$result = $ex->getData();
+        }
+		
+       return $result;
+    }
+	
+	public function removeGroup($params = array())
+    {	
+		$result = array();
+		
+		try {
+			$group = $this->groupdelete($params);
+
+            if ($group != null && isset($group['data'])) {
+                $result = $group['data']['item'];
+            }
+
+		} catch (VboutException $ex) {
+			$result = $ex->getData();
+        }
+		
+       return $result;
+    }
+	
+	public function changeGroupStatus($params = array())
+    {	
+		$result = array();
+		
+		try {
+			$this->set_method('POST');
+			
+			$group = $this->groupstatus($params);
+
+            if ($group != null && isset($group['data'])) {
+                $result = $group['data']['item'];
+            }
+
+		} catch (VboutException $ex) {
+			$result = $ex->getData();
+        }
+		
+       return $result;
+    }
+	
 	public function removeUser($params = array())
     {	
 		$result = array();
@@ -111,7 +167,7 @@ class UserWS extends Vbout
 		try {
 			$this->set_method('POST');
 			
-			$user = $this->add($params);
+			$user = $this->status($params);
 
             if ($user != null && isset($user['data'])) {
                 $result = $user['data']['item'];
