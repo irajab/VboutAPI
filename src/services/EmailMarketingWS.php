@@ -327,4 +327,22 @@ class EmailMarketingWS extends Vbout
 		
        return $result;
     }
+	
+	public function getMyForms()
+	{
+		$result = array();
+		
+		try {
+			$forms = $this->getforms();
+
+            if ($forms != null && isset($forms['data'])) {
+                $result = array_merge($result, $forms['data']['forms']);
+            }
+
+		} catch (VboutException $ex) {
+			$result = $ex->getData();
+        }
+		
+       return $result;
+	}
 }
